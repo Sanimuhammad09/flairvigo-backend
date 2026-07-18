@@ -48,10 +48,10 @@ export declare class OrdersController {
             };
         } & {
             id: string;
+            variantId: string;
             quantity: number;
             unitPrice: number;
             hasEmbroidery: boolean;
-            variantId: string;
             embroideryDesignId: string | null;
             orderId: string;
         })[];
@@ -101,10 +101,10 @@ export declare class OrdersController {
             };
         } & {
             id: string;
+            variantId: string;
             quantity: number;
             unitPrice: number;
             hasEmbroidery: boolean;
-            variantId: string;
             embroideryDesignId: string | null;
             orderId: string;
         })[];
@@ -187,10 +187,10 @@ export declare class OrdersController {
             };
         } & {
             id: string;
+            variantId: string;
             quantity: number;
             unitPrice: number;
             hasEmbroidery: boolean;
-            variantId: string;
             embroideryDesignId: string | null;
             orderId: string;
         })[];
