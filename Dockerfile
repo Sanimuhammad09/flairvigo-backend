@@ -1,5 +1,8 @@
 FROM node:20-alpine AS builder
 
+# Install OpenSSL
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
 # Copy package.json and package-lock.json
@@ -20,6 +23,9 @@ RUN npm run build
 
 # Production stage
 FROM node:20-alpine
+
+# Install OpenSSL
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
