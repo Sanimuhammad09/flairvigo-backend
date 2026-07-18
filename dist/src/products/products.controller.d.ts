@@ -18,21 +18,21 @@ export declare class ProductsController {
                 inventory: number;
             }[];
             images: {
-                order: number;
-                url: string;
                 id: string;
+                order: number;
+                productId: string;
+                url: string;
                 alt: string | null;
                 isMain: boolean;
-                productId: string;
             }[];
             _count: {
                 reviews: number;
             };
         } & {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string;
             fabricDetails: string | null;
@@ -56,18 +56,18 @@ export declare class ProductsController {
             colorHex: string | null;
         }[];
         images: {
-            order: number;
-            url: string;
             id: string;
+            order: number;
+            productId: string;
+            url: string;
             alt: string | null;
             isMain: boolean;
-            productId: string;
         }[];
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string;
         fabricDetails: string | null;
@@ -80,20 +80,20 @@ export declare class ProductsController {
     })[]>;
     findBySlug(slug: string): Promise<{
         category: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
             parentId: string | null;
         };
         collection: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
@@ -109,16 +109,17 @@ export declare class ProductsController {
             createdAt: Date;
             updatedAt: Date;
             userId: string;
+            productId: string;
             rating: number;
             title: string | null;
             content: string;
             isApproved: boolean;
-            productId: string;
         })[];
         variants: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            productId: string;
             sku: string;
             barcode: string | null;
             color: string;
@@ -126,31 +127,30 @@ export declare class ProductsController {
             size: string;
             priceOffset: number;
             inventory: number;
-            productId: string;
         }[];
         images: {
-            order: number;
-            url: string;
             id: string;
+            order: number;
+            productId: string;
+            url: string;
             alt: string | null;
             isMain: boolean;
-            productId: string;
         }[];
         videos: {
-            order: number;
-            url: string;
             id: string;
+            order: number;
             productId: string;
+            url: string;
             thumbnail: string | null;
         }[];
         _count: {
             reviews: number;
         };
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string;
         fabricDetails: string | null;
@@ -167,18 +167,18 @@ export declare class ProductsController {
             colorHex: string | null;
         }[];
         images: {
-            order: number;
-            url: string;
             id: string;
+            order: number;
+            productId: string;
+            url: string;
             alt: string | null;
             isMain: boolean;
-            productId: string;
         }[];
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string;
         fabricDetails: string | null;
@@ -191,20 +191,20 @@ export declare class ProductsController {
     })[]>;
     create(dto: CreateProductDto): Promise<{
         category: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
             parentId: string | null;
         };
         collection: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
@@ -213,6 +213,7 @@ export declare class ProductsController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            productId: string;
             sku: string;
             barcode: string | null;
             color: string;
@@ -220,21 +221,20 @@ export declare class ProductsController {
             size: string;
             priceOffset: number;
             inventory: number;
-            productId: string;
         }[];
         images: {
-            order: number;
-            url: string;
             id: string;
+            order: number;
+            productId: string;
+            url: string;
             alt: string | null;
             isMain: boolean;
-            productId: string;
         }[];
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string;
         fabricDetails: string | null;
@@ -247,20 +247,20 @@ export declare class ProductsController {
     }>;
     update(id: string, dto: UpdateProductDto): Promise<{
         category: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
             parentId: string | null;
         };
         collection: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
@@ -269,6 +269,7 @@ export declare class ProductsController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
+            productId: string;
             sku: string;
             barcode: string | null;
             color: string;
@@ -276,21 +277,20 @@ export declare class ProductsController {
             size: string;
             priceOffset: number;
             inventory: number;
-            productId: string;
         }[];
         images: {
-            order: number;
-            url: string;
             id: string;
+            order: number;
+            productId: string;
+            url: string;
             alt: string | null;
             isMain: boolean;
-            productId: string;
         }[];
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string;
         fabricDetails: string | null;
@@ -307,6 +307,7 @@ export declare class ProductsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        productId: string;
         sku: string;
         barcode: string | null;
         color: string;
@@ -314,13 +315,12 @@ export declare class ProductsController {
         size: string;
         priceOffset: number;
         inventory: number;
-        productId: string;
     }>;
     remove(id: string): Promise<{
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string;
         fabricDetails: string | null;

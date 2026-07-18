@@ -19,7 +19,7 @@ export declare class DashboardController {
         customer: string;
         email: string;
         amount: number;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        status: import("@prisma/client").$Enums.OrderStatus;
         date: Date;
     }[]>;
     getAnalytics(): Promise<{
@@ -46,7 +46,7 @@ export declare class DashboardController {
             quantity: number | null;
         }[];
         orderStatusBreakdown: {
-            status: import(".prisma/client").$Enums.OrderStatus;
+            status: import("@prisma/client").$Enums.OrderStatus;
             count: number;
         }[];
     }>;

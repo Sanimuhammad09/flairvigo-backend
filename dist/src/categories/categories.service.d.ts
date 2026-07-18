@@ -4,10 +4,10 @@ export declare class CategoriesService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(dto: CreateCategoryDto): Promise<{
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string | null;
         image: string | null;
@@ -16,10 +16,10 @@ export declare class CategoriesService {
     findAll(): Promise<({
         children: ({
             children: {
+                name: string;
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                name: string;
                 slug: string;
                 description: string | null;
                 image: string | null;
@@ -29,10 +29,10 @@ export declare class CategoriesService {
                 products: number;
             };
         } & {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
@@ -42,10 +42,10 @@ export declare class CategoriesService {
             products: number;
         };
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string | null;
         image: string | null;
@@ -53,20 +53,20 @@ export declare class CategoriesService {
     })[]>;
     findBySlug(slug: string): Promise<{
         parent: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
             parentId: string | null;
         } | null;
         children: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
@@ -76,10 +76,10 @@ export declare class CategoriesService {
             products: number;
         };
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string | null;
         image: string | null;
@@ -87,50 +87,50 @@ export declare class CategoriesService {
     }>;
     findById(id: string): Promise<{
         parent: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
             parentId: string | null;
         } | null;
         children: {
+            name: string;
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
             description: string | null;
             image: string | null;
             parentId: string | null;
         }[];
     } & {
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string | null;
         image: string | null;
         parentId: string | null;
     }>;
     update(id: string, dto: UpdateCategoryDto): Promise<{
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string | null;
         image: string | null;
         parentId: string | null;
     }>;
     remove(id: string): Promise<{
+        name: string;
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
         description: string | null;
         image: string | null;

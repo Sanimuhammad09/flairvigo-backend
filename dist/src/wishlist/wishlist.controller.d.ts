@@ -8,18 +8,18 @@ export declare class WishlistController {
             variant: {
                 product: {
                     images: {
-                        order: number;
-                        url: string;
                         id: string;
+                        order: number;
+                        productId: string;
+                        url: string;
                         alt: string | null;
                         isMain: boolean;
-                        productId: string;
                     }[];
                 } & {
+                    name: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    name: string;
                     slug: string;
                     description: string;
                     fabricDetails: string | null;
@@ -34,6 +34,7 @@ export declare class WishlistController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                productId: string;
                 sku: string;
                 barcode: string | null;
                 color: string;
@@ -41,7 +42,6 @@ export declare class WishlistController {
                 size: string;
                 priceOffset: number;
                 inventory: number;
-                productId: string;
             };
         } & {
             id: string;
@@ -60,18 +60,18 @@ export declare class WishlistController {
             variant: {
                 product: {
                     images: {
-                        order: number;
-                        url: string;
                         id: string;
+                        order: number;
+                        productId: string;
+                        url: string;
                         alt: string | null;
                         isMain: boolean;
-                        productId: string;
                     }[];
                 } & {
+                    name: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    name: string;
                     slug: string;
                     description: string;
                     fabricDetails: string | null;
@@ -86,6 +86,7 @@ export declare class WishlistController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                productId: string;
                 sku: string;
                 barcode: string | null;
                 color: string;
@@ -93,7 +94,6 @@ export declare class WishlistController {
                 size: string;
                 priceOffset: number;
                 inventory: number;
-                productId: string;
             };
         } & {
             id: string;
@@ -112,18 +112,18 @@ export declare class WishlistController {
             variant: {
                 product: {
                     images: {
-                        order: number;
-                        url: string;
                         id: string;
+                        order: number;
+                        productId: string;
+                        url: string;
                         alt: string | null;
                         isMain: boolean;
-                        productId: string;
                     }[];
                 } & {
+                    name: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
-                    name: string;
                     slug: string;
                     description: string;
                     fabricDetails: string | null;
@@ -138,6 +138,7 @@ export declare class WishlistController {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
+                productId: string;
                 sku: string;
                 barcode: string | null;
                 color: string;
@@ -145,7 +146,6 @@ export declare class WishlistController {
                 size: string;
                 priceOffset: number;
                 inventory: number;
-                productId: string;
             };
         } & {
             id: string;
