@@ -39,8 +39,8 @@ async function bootstrap() {
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api/docs', app, document);
     const port = process.env.PORT || 4000;
-    await app.listen(port);
-    console.log(`🚀 Flairvigo API running on http://localhost:${port}`);
+    await app.listen(port, '0.0.0.0');
+    console.log(`🚀 Flairvigo API running on http://0.0.0.0:${port}`);
     console.log(`📄 Swagger docs at http://localhost:${port}/api/docs`);
 }
 bootstrap();
