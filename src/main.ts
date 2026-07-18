@@ -40,6 +40,8 @@ async function bootstrap() {
     .setTitle('Flairvigo API')
     .setDescription('Premium Fashion Ecommerce Platform API')
     .setVersion('1.0')
+    .addServer('https://flairvigo-backend-production.up.railway.app', 'Production Server')
+    .addServer(`http://localhost:${process.env.PORT || 4000}`, 'Local Development Server')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
