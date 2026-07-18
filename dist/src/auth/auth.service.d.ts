@@ -17,7 +17,7 @@ export declare class AuthService {
             email: string;
             firstName: string;
             lastName: string;
-            role: import("@prisma/client").$Enums.Role;
+            role: import(".prisma/client").$Enums.Role;
             isEmailVerified: boolean;
             avatar: string | null;
             createdAt: Date;
@@ -32,7 +32,7 @@ export declare class AuthService {
             email: string;
             firstName: string;
             lastName: string;
-            role: import("@prisma/client").$Enums.Role;
+            role: import(".prisma/client").$Enums.Role;
             isEmailVerified: boolean;
             avatar: string | null;
             createdAt: Date;
@@ -47,7 +47,7 @@ export declare class AuthService {
             email: string;
             firstName: string;
             lastName: string;
-            role: import("@prisma/client").$Enums.Role;
+            role: import(".prisma/client").$Enums.Role;
             isEmailVerified: boolean;
             avatar: string | null;
             createdAt: Date;
@@ -65,7 +65,7 @@ export declare class AuthService {
         email: string;
         firstName: string;
         lastName: string;
-        role: import("@prisma/client").$Enums.Role;
+        role: import(".prisma/client").$Enums.Role;
         isEmailVerified: boolean;
         avatar: string | null;
         createdAt: Date;

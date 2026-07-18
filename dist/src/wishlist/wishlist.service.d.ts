@@ -9,17 +9,17 @@ export declare class WishlistService {
                 product: {
                     images: {
                         id: string;
-                        order: number;
-                        productId: string;
                         url: string;
                         alt: string | null;
+                        order: number;
                         isMain: boolean;
+                        productId: string;
                     }[];
                 } & {
-                    name: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
+                    name: string;
                     slug: string;
                     description: string;
                     fabricDetails: string | null;
@@ -34,7 +34,6 @@ export declare class WishlistService {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                productId: string;
                 sku: string;
                 barcode: string | null;
                 color: string;
@@ -42,6 +41,7 @@ export declare class WishlistService {
                 size: string;
                 priceOffset: number;
                 inventory: number;
+                productId: string;
             };
         } & {
             id: string;
@@ -61,17 +61,17 @@ export declare class WishlistService {
                 product: {
                     images: {
                         id: string;
-                        order: number;
-                        productId: string;
                         url: string;
                         alt: string | null;
+                        order: number;
                         isMain: boolean;
+                        productId: string;
                     }[];
                 } & {
-                    name: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
+                    name: string;
                     slug: string;
                     description: string;
                     fabricDetails: string | null;
@@ -86,7 +86,6 @@ export declare class WishlistService {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                productId: string;
                 sku: string;
                 barcode: string | null;
                 color: string;
@@ -94,6 +93,7 @@ export declare class WishlistService {
                 size: string;
                 priceOffset: number;
                 inventory: number;
+                productId: string;
             };
         } & {
             id: string;
@@ -113,17 +113,17 @@ export declare class WishlistService {
                 product: {
                     images: {
                         id: string;
-                        order: number;
-                        productId: string;
                         url: string;
                         alt: string | null;
+                        order: number;
                         isMain: boolean;
+                        productId: string;
                     }[];
                 } & {
-                    name: string;
                     id: string;
                     createdAt: Date;
                     updatedAt: Date;
+                    name: string;
                     slug: string;
                     description: string;
                     fabricDetails: string | null;
@@ -138,7 +138,6 @@ export declare class WishlistService {
                 id: string;
                 createdAt: Date;
                 updatedAt: Date;
-                productId: string;
                 sku: string;
                 barcode: string | null;
                 color: string;
@@ -146,6 +145,7 @@ export declare class WishlistService {
                 size: string;
                 priceOffset: number;
                 inventory: number;
+                productId: string;
             };
         } & {
             id: string;

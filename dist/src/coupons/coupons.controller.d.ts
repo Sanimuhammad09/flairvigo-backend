@@ -9,8 +9,8 @@ export declare class CouponsController {
             id: string;
             createdAt: Date;
             updatedAt: Date;
-            type: string;
             isActive: boolean;
+            type: string;
             code: string;
             value: number;
             minOrderValue: number | null;
@@ -26,8 +26,8 @@ export declare class CouponsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
         isActive: boolean;
+        type: string;
         code: string;
         value: number;
         minOrderValue: number | null;
@@ -41,8 +41,8 @@ export declare class CouponsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
         isActive: boolean;
+        type: string;
         code: string;
         value: number;
         minOrderValue: number | null;
@@ -56,8 +56,8 @@ export declare class CouponsController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
-        type: string;
         isActive: boolean;
+        type: string;
         code: string;
         value: number;
         minOrderValue: number | null;
