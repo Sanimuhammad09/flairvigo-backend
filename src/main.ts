@@ -7,50 +7,62 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  try {
+    const app = await NestFactory.create(AppModule);
 
-  // Security
-  app.use(helmet());
-  app.enableCors({
-    origin: [process.env.FRONTEND_URL || 'http://localhost:3000', 'http://localhost:5173'],
-    credentials: true,
-  });
+    // Security
+    app.use(helmet());
+    app.enableCors({
+      origin: [process.env.FRONTEND_URL || 'http://localhost:3000', 'http://localhost:5173'],
+      credentials: true,
+    });
 
-  // Global prefix
-  app.setGlobalPrefix('api');
+    // Global prefix
+    app.setGlobalPrefix('api');
 
-  // Validation
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
+    // Validation
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+        transformOptions: {
+          enableImplicitConversion: true,
+        },
+      }),
+    );
 
-  // Interceptors & Filters
-  app.useGlobalInterceptors(new TransformInterceptor());
-  app.useGlobalFilters(new PrismaExceptionFilter());
+    // Interceptors & Filters
+    app.useGlobalInterceptors(new TransformInterceptor());
+    app.useGlobalFilters(new PrismaExceptionFilter());
 
-  // Swagger
-  const config = new DocumentBuilder()
-    .setTitle('Flairvigo API')
-    .setDescription('Premium Fashion Ecommerce Platform API')
-    .setVersion('1.0')
-    .addServer('https://flairvigo-backend-production.up.railway.app', 'Production Server')
-    .addServer(`http://localhost:${process.env.PORT || 4000}`, 'Local Development Server')
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+    // Swagger
+    const config = new DocumentBuilder()
+      .setTitle('Flairvigo API')
+      .setDescription('Premium Fashion Ecommerce Platform API')
+      .setVersion('1.0')
+      .addServer('https://flairvigo-backend-production.up.railway.app', 'Production Server')
+      .addServer(`http://localhost:${process.env.PORT || 4000}`, 'Local Development Server')
+      .addBearerAuth()
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api/docs', app, document);
 
-  const port = process.env.PORT || 4000;
-  await app.listen(port, '0.0.0.0');
-  console.log(`🚀 Flairvigo API running on http://0.0.0.0:${port}`);
-  console.log(`📄 Swagger docs at http://localhost:${port}/api/docs`);
+    const port = process.env.PORT || 4000;
+    await app.listen(port, '0.0.0.0');
+    console.log(`🚀 Flairvigo API running on http://0.0.0.0:${port}`);
+    console.log(`📄 Swagger docs at http://localhost:${port}/api/docs`);
+  } catch (err) {
+    console.error('❌ Error during application bootstrap:', err);
+    process.exit(1);
+  }
 }
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+});
+process.on('uncaughtException', (err) => {
+  console.error('❌ Uncaught Exception thrown:', err);
+});
 
 bootstrap();
