@@ -71,8 +71,8 @@ export class UsersController {
   @ApiOperation({ summary: 'List all users (admin only)' })
   async findAll(@Query() query: PaginationDto & { search?: string }) {
     return this.usersService.findAll({
-      page: query.page,
-      limit: query.limit,
+      page: query.page ? Number(query.page) : undefined,
+      limit: query.limit ? Number(query.limit) : undefined,
       search: query.search,
     });
   }
