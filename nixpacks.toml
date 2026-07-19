@@ -1,5 +1,2 @@
 [phases.setup]
 nixPkgs = ["...", "openssl"]
-
-[phases.install]
-cmds = ["npm ci"]
