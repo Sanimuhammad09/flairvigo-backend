@@ -5,6 +5,7 @@ import {
   Body,
   UseGuards,
   Query,
+  Param,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -74,5 +75,19 @@ export class UsersController {
       limit: query.limit,
       search: query.search,
     });
+  }
+
+  @Put('admin/:id/status')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Block or unblock a user (admin only)' })
+  async updateStatus(
+    @Param('id') id: string,
+    @Body('isActive') isActive: boolean,
+  ) {
+    const updated = await this.usersService.updateStatus(id, isActive);
+    const { passwordHash, ...safeUser } = updated;
+    return safeUser;
   }
 }

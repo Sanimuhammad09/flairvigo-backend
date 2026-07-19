@@ -161,4 +161,26 @@ export class OrdersService {
       include: { user: { select: { firstName: true, lastName: true, email: true } } },
     });
   }
+
+  async updateStatus(id: string, status: any, note?: string) {
+    const order = await this.prisma.order.findUnique({ where: { id } });
+    if (!order) throw new NotFoundException('Order not found');
+
+    return this.prisma.$transaction(async (tx) => {
+      const updatedOrder = await tx.order.update({
+        where: { id },
+        data: { status },
+      });
+
+      await tx.orderStatusHistory.create({
+        data: {
+          orderId: id,
+          status,
+          note,
+        },
+      });
+
+      return updatedOrder;
+    });
+  }
 }

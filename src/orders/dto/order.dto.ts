@@ -1,5 +1,6 @@
-import { IsArray, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsEnum, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
+import { OrderStatus } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
 class OrderItemDto {
@@ -47,4 +48,15 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   couponCode?: string;
+}
+
+export class UpdateOrderStatusDto {
+  @ApiProperty({ enum: OrderStatus })
+  @IsEnum(OrderStatus)
+  status: OrderStatus;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  note?: string;
 }

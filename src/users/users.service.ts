@@ -59,6 +59,13 @@ export class UsersService {
     });
   }
 
+  async updateStatus(id: string, isActive: boolean): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: { isActive },
+    });
+  }
+
   async validatePassword(user: User, password: string): Promise<boolean> {
     return bcrypt.compare(password, user.passwordHash);
   }

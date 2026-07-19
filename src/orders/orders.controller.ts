@@ -40,4 +40,15 @@ export class OrdersController {
   async findOne(@CurrentUser() user: any, @Param('id') id: string) {
     return this.ordersService.findOne(id, user.id);
   }
+
+  @Post('admin/:id/status')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Update order status (admin only)' })
+  async updateStatus(
+    @Param('id') id: string,
+    @Body() dto: import('./dto/order.dto').UpdateOrderStatusDto,
+  ) {
+    return this.ordersService.updateStatus(id, dto.status, dto.note);
+  }
 }
