@@ -88,39 +88,35 @@ export class UsersService {
         }
       : {};
 
-    try {
-      const [users, total] = await Promise.all([
-        this.prisma.user.findMany({
-          where,
-          skip,
-          take: limit,
-          orderBy: { createdAt: 'desc' },
-          select: {
-            id: true,
-            email: true,
-            firstName: true,
-            lastName: true,
-            role: true,
-            avatar: true,
-            isEmailVerified: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        }),
-        this.prisma.user.count({ where }),
-      ]);
-      return {
-        data: users,
-        meta: {
-          total,
-          page,
-          limit,
-          totalPages: Math.ceil(total / limit),
+    const [users, total] = await Promise.all([
+      this.prisma.user.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          email: true,
+          firstName: true,
+          lastName: true,
+          role: true,
+          avatar: true,
+          isEmailVerified: true,
+          createdAt: true,
+          updatedAt: true,
         },
-      };
-    } catch (e: any) {
-      console.error(e);
-      throw new ConflictException(e.message);
-    }
+      }),
+      this.prisma.user.count({ where }),
+    ]);
+
+    return {
+      data: users,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 }
