@@ -8,8 +8,8 @@ export default () => ({
     port: parseInt(process.env.REDIS_PORT || '6379', 10),
   },
   jwt: {
-    secret: process.env.JWT_SECRET,
-    refreshSecret: process.env.JWT_REFRESH_SECRET,
+    secret: process.env.JWT_SECRET || 'super-secret-default-key',
+    refreshSecret: process.env.JWT_REFRESH_SECRET || 'super-secret-refresh-key',
     expiresIn: process.env.JWT_EXPIRATION || '15m',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRATION || '7d',
   },
