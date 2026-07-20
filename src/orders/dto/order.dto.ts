@@ -48,6 +48,11 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   couponCode?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNumber()
+  discountAmount?: number;
 }
 
 export class UpdateOrderStatusDto {
