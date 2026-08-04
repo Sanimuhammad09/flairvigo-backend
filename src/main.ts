@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, RequestMethod } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
@@ -23,9 +23,7 @@ async function bootstrap() {
     });
 
     // Global prefix
-    app.setGlobalPrefix('api', {
-      exclude: [{ path: '/', method: RequestMethod.GET }],
-    });
+    app.setGlobalPrefix('api');
 
     // Validation
     app.useGlobalPipes(
@@ -56,6 +54,13 @@ async function bootstrap() {
     SwaggerModule.setup('api/docs', app, document);
 
     const port = parseInt(process.env.PORT || '4000', 10);
+
+    // Serve root route to avoid 404
+    const httpAdapter = app.getHttpAdapter();
+    httpAdapter.get('/', (req, res) => {
+      res.send({ status: 'ok', message: 'API is running', docs: '/api/docs' });
+    });
+
     await app.listen(port);
     console.log(`🚀 Flairvigo API running on port ${port}`);
     console.log(`📄 Swagger docs at http://localhost:${port}/api/docs`);
