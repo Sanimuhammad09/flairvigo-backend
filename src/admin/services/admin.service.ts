@@ -109,7 +109,18 @@ export class AdminService {
 
   async getOrders() {
     return this.prisma.order.findMany({
-      include: { user: true },
+      include: { 
+        user: true,
+        items: {
+          include: {
+            variant: {
+              include: {
+                product: true
+              }
+            }
+          }
+        }
+      },
       orderBy: { createdAt: 'desc' },
     });
   }
