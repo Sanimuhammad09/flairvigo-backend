@@ -18,11 +18,11 @@ async function main() {
 
   console.log('Seeding Categories...');
   const categories = [
-    { name: 'Scrub Tops', slug: 'scrub-tops', image: '/images/product-top.png' },
-    { name: 'Scrub Pants', slug: 'scrub-pants', image: '/images/product-pants.png' },
-    { name: 'Underscrubs', slug: 'underscrubs', image: '/images/product-jacket.png' },
-    { name: 'Outerwear', slug: 'outerwear', image: '/images/product-jacket.png' },
-    { name: 'Accessories', slug: 'accessories', image: '/images/product-shoes.png' },
+    { name: 'Eau de Parfum', slug: 'eau-de-parfum', image: '/images/perfume_floral.png' },
+    { name: 'Eau de Toilette', slug: 'eau-de-toilette', image: '/images/perfume_designer.png' },
+    { name: 'Travel Sizes', slug: 'travel-sizes', image: '/images/perfume_luxury.png' },
+    { name: 'Gift Sets', slug: 'gift-sets', image: '/images/perfume_oud.png' },
+    { name: 'Accessories', slug: 'accessories', image: '/images/perfume_product.png' },
   ];
 
   const catMap: Record<string, string> = {};
@@ -36,111 +36,106 @@ async function main() {
   }
 
   console.log('Seeding Products...');
-  // Women's Scrub Tops
   await prisma.product.upsert({
-    where: { slug: 'womens-classic-scrub-top' },
+    where: { slug: 'womens-classic-perfume' },
     update: {},
     create: {
-      name: 'Women\'s Classic Scrub Top',
-      slug: 'womens-classic-scrub-top',
-      description: 'Classic fit scrub top for women.',
+      name: 'Women\'s Classic Perfume',
+      slug: 'womens-classic-perfume',
+      description: 'Classic fit perfume for women.',
       basePrice: 45000,
-      categoryId: catMap['scrub-tops'],
+      categoryId: catMap['eau-de-parfum'],
       collectionId: womenCol.id,
       isFeatured: true,
-      images: { create: [{ url: '/images/product-top.png', isMain: true }] },
+      images: { create: [{ url: '/images/perfume_floral.png', isMain: true }] },
       variants: {
         create: [
-          { sku: 'W-TOP-NAVY-S', color: 'Navy', colorHex: '#000080', size: 'S', inventory: 50 },
-          { sku: 'W-TOP-NAVY-M', color: 'Navy', colorHex: '#000080', size: 'M', inventory: 50 },
+          { sku: 'W-PERF-GLD-S', color: 'Gold', colorHex: '#FFD700', size: '50ml', inventory: 50 },
+          { sku: 'W-PERF-GLD-M', color: 'Gold', colorHex: '#FFD700', size: '100ml', inventory: 50 },
         ]
       }
     }
   });
 
-  // Women's Scrub Pants
   await prisma.product.upsert({
-    where: { slug: 'womens-classic-scrub-pants' },
+    where: { slug: 'womens-classic-body-oil' },
     update: {},
     create: {
-      name: 'Women\'s Classic Scrub Pants',
-      slug: 'womens-classic-scrub-pants',
-      description: 'Classic fit scrub pants for women.',
+      name: 'Women\'s Classic Body Oil',
+      slug: 'womens-classic-body-oil',
+      description: 'Classic luxury body oil for women.',
       basePrice: 50000,
-      categoryId: catMap['scrub-pants'],
+      categoryId: catMap['eau-de-toilette'],
       collectionId: womenCol.id,
       isFeatured: true,
-      images: { create: [{ url: '/images/product-pants.png', isMain: true }] },
+      images: { create: [{ url: '/images/perfume_designer.png', isMain: true }] },
       variants: {
         create: [
-          { sku: 'W-PANT-NAVY-S', color: 'Navy', colorHex: '#000080', size: 'S', inventory: 50 },
-          { sku: 'W-PANT-NAVY-M', color: 'Navy', colorHex: '#000080', size: 'M', inventory: 50 },
+          { sku: 'W-OIL-GLD-S', color: 'Gold', colorHex: '#FFD700', size: '50ml', inventory: 50 },
+          { sku: 'W-OIL-GLD-M', color: 'Gold', colorHex: '#FFD700', size: '100ml', inventory: 50 },
         ]
       }
     }
   });
 
-  // Men's Scrub Tops
   await prisma.product.upsert({
-    where: { slug: 'mens-pro-scrub-top' },
+    where: { slug: 'mens-pro-cologne' },
     update: {},
     create: {
-      name: 'Men\'s Pro Scrub Top',
-      slug: 'mens-pro-scrub-top',
-      description: 'Pro fit scrub top for men.',
+      name: 'Men\'s Pro Cologne',
+      slug: 'mens-pro-cologne',
+      description: 'Pro signature cologne for men.',
       basePrice: 48000,
-      categoryId: catMap['scrub-tops'],
+      categoryId: catMap['eau-de-parfum'],
       collectionId: menCol.id,
       isFeatured: true,
-      images: { create: [{ url: '/images/product-top.png', isMain: true }] },
+      images: { create: [{ url: '/images/perfume_oud.png', isMain: true }] },
       variants: {
         create: [
-          { sku: 'M-TOP-BLK-M', color: 'Black', colorHex: '#000000', size: 'M', inventory: 40 },
-          { sku: 'M-TOP-BLK-L', color: 'Black', colorHex: '#000000', size: 'L', inventory: 40 },
+          { sku: 'M-COL-BLK-M', color: 'Black', colorHex: '#000000', size: '100ml', inventory: 40 },
+          { sku: 'M-COL-BLK-L', color: 'Black', colorHex: '#000000', size: '150ml', inventory: 40 },
         ]
       }
     }
   });
 
-  // Men's Scrub Pants
   await prisma.product.upsert({
-    where: { slug: 'mens-pro-scrub-pants' },
+    where: { slug: 'mens-pro-body-spray' },
     update: {},
     create: {
-      name: 'Men\'s Pro Scrub Pants',
-      slug: 'mens-pro-scrub-pants',
-      description: 'Pro fit scrub pants for men.',
+      name: 'Men\'s Pro Body Spray',
+      slug: 'mens-pro-body-spray',
+      description: 'Pro fit body spray for men.',
       basePrice: 55000,
-      categoryId: catMap['scrub-pants'],
+      categoryId: catMap['eau-de-toilette'],
       collectionId: menCol.id,
       isFeatured: true,
-      images: { create: [{ url: '/images/product-pants.png', isMain: true }] },
+      images: { create: [{ url: '/images/perfume_designer.png', isMain: true }] },
       variants: {
         create: [
-          { sku: 'M-PANT-BLK-M', color: 'Black', colorHex: '#000000', size: 'M', inventory: 40 },
-          { sku: 'M-PANT-BLK-L', color: 'Black', colorHex: '#000000', size: 'L', inventory: 40 },
+          { sku: 'M-SPR-BLK-M', color: 'Black', colorHex: '#000000', size: '100ml', inventory: 40 },
+          { sku: 'M-SPR-BLK-L', color: 'Black', colorHex: '#000000', size: '150ml', inventory: 40 },
         ]
       }
     }
   });
 
-  // Underscrub
   await prisma.product.upsert({
-    where: { slug: 'unisex-underscrub' },
+    where: { slug: 'unisex-premium-perfume' },
     update: {},
     create: {
-      name: 'Unisex Premium Underscrub',
-      slug: 'unisex-underscrub',
-      description: 'Comfortable long sleeve underscrub.',
+      name: 'Unisex Premium Perfume',
+      slug: 'unisex-premium-perfume',
+      description: 'Luxurious signature unisex perfume.',
       basePrice: 35000,
-      categoryId: catMap['underscrubs'],
-      collectionId: womenCol.id, // Put in women's as a default
+      categoryId: catMap['travel-sizes'],
+      collectionId: womenCol.id,
       isFeatured: true,
-      images: { create: [{ url: '/images/product-jacket.png', isMain: true }] },
+      images: { create: [{ url: '/images/perfume_luxury.png', isMain: true }] },
       variants: {
         create: [
-          { sku: 'UNDER-GRY-M', color: 'Grey', colorHex: '#808080', size: 'M', inventory: 60 },
-          { sku: 'UNDER-GRY-L', color: 'Grey', colorHex: '#808080', size: 'L', inventory: 60 },
+          { sku: 'UNI-PERF-GRY-M', color: 'Grey', colorHex: '#808080', size: '50ml', inventory: 60 },
+          { sku: 'UNI-PERF-GRY-L', color: 'Grey', colorHex: '#808080', size: '100ml', inventory: 60 },
         ]
       }
     }

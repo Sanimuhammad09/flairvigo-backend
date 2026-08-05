@@ -17,6 +17,8 @@ import { WaitlistModule } from './waitlist/waitlist.module';
 import { FitProfileModule } from './fit-profile/fit-profile.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { StoreSettingsModule } from './store-settings/store-settings.module';
+import { AdminModule } from './admin/admin.module';
+import { CheckoutModule } from './checkout/checkout.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { StoreSettingsModule } from './store-settings/store-settings.module';
     FitProfileModule,
     DashboardModule,
     StoreSettingsModule,
+    AdminModule,
+    CheckoutModule,
   ],
   providers: [
     // Apply JWT guard globally — use @Public() to exempt routes

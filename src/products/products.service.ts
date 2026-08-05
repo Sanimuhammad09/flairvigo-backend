@@ -47,7 +47,7 @@ export class ProductsService {
     const skip = (page - 1) * limit;
 
     const where: Prisma.ProductWhereInput = {
-      isActive: true,
+      status: 'ACTIVE',
       ...(category && {
         category: { slug: category },
       }),
@@ -214,7 +214,7 @@ export class ProductsService {
 
   async getFeatured(limit: number = 8) {
     return this.prisma.product.findMany({
-      where: { isFeatured: true, isActive: true },
+      where: { isFeatured: true, status: 'ACTIVE' },
       take: limit,
       orderBy: { createdAt: 'desc' },
       include: {
@@ -233,7 +233,7 @@ export class ProductsService {
     return this.prisma.product.findMany({
       where: {
         id: { not: productId },
-        isActive: true,
+        status: 'ACTIVE',
         categoryId: product.categoryId,
       },
       take: limit,

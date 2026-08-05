@@ -40,58 +40,58 @@ async function main() {
   const womenCategory = await prisma.category.upsert({
     where: { slug: 'women' },
     update: {},
-    create: { name: 'Women', slug: 'women', description: 'Women scrubs' },
+    create: { name: 'Women', slug: 'women', description: 'Women perfumes' },
   });
 
   const menCategory = await prisma.category.upsert({
     where: { slug: 'men' },
     update: {},
-    create: { name: 'Men', slug: 'men', description: 'Men scrubs' },
+    create: { name: 'Men', slug: 'men', description: 'Men perfumes' },
   });
 
   // --- Products ---
   const scrubTop = await prisma.product.upsert({
-    where: { slug: 'the-classic-scrub-top-women' },
+    where: { slug: 'the-classic-perfume-women' },
     update: {},
     create: {
-      name: 'The Classic Scrub Top',
-      slug: 'the-classic-scrub-top-women',
-      description: 'Our signature V-neck scrub top featuring 3 pockets and a flattering tailored fit.',
+      name: 'The Classic Perfume',
+      slug: 'the-classic-perfume-women',
+      description: 'Our signature luxury fragrance featuring elegant notes and a flattering scent profile.',
       basePrice: 48.00,
       categoryId: womenCategory.id,
       images: {
         create: [
-          { url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop', isMain: true },
+          { url: '/images/perfume_floral.png', isMain: true },
         ],
       },
       variants: {
         create: [
-          { sku: 'W-TOP-NVY-S', color: 'Navy', size: 'S', inventory: 100 },
-          { sku: 'W-TOP-NVY-M', color: 'Navy', size: 'M', inventory: 150 },
-          { sku: 'W-TOP-BLK-S', color: 'Black', size: 'S', inventory: 80 },
+          { sku: 'W-PERF-50-S', color: 'Gold', size: '50ml', inventory: 100 },
+          { sku: 'W-PERF-100-M', color: 'Gold', size: '100ml', inventory: 150 },
+          { sku: 'W-PERF-150-L', color: 'Gold', size: '150ml', inventory: 80 },
         ],
       },
     },
   });
 
   const scrubPants = await prisma.product.upsert({
-    where: { slug: 'the-jogger-scrub-pants-women' },
+    where: { slug: 'the-premium-body-oil-women' },
     update: {},
     create: {
-      name: 'The Jogger Scrub Pants',
-      slug: 'the-jogger-scrub-pants-women',
-      description: 'Athletic-inspired jogger scrub pants with 6 pockets and a comfortable yoga waistband.',
+      name: 'The Premium Body Oil',
+      slug: 'the-premium-body-oil-women',
+      description: 'Luxurious body oil to perfectly complement your signature scent.',
       basePrice: 58.00,
       categoryId: womenCategory.id,
       images: {
         create: [
-          { url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2068&auto=format&fit=crop', isMain: true },
+          { url: '/images/perfume_designer.png', isMain: true },
         ],
       },
       variants: {
         create: [
-          { sku: 'W-JOG-NVY-S', color: 'Navy', size: 'S', inventory: 120 },
-          { sku: 'W-JOG-NVY-M', color: 'Navy', size: 'M', inventory: 130 },
+          { sku: 'W-OIL-50-S', color: 'Clear', size: '50ml', inventory: 120 },
+          { sku: 'W-OIL-100-M', color: 'Clear', size: '100ml', inventory: 130 },
         ],
       },
     },

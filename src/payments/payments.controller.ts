@@ -9,23 +9,22 @@ import { Public } from '../common/decorators/public.decorator';
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
-  @Post('create-intent')
+  @Post('checkout/paystack')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Create Stripe payment intent for an order' })
-  async createPaymentIntent(@Body() body: { orderId: string; amount: number }) {
-    return this.paymentsService.createPaymentIntent(body.orderId, body.amount);
+  @ApiOperation({ summary: 'Initialize Paystack payment for an order' })
+  async initializePaystack(@Body() body: { orderId: string; email: string; amount: number }) {
+    return this.paymentsService.initializePaystack(body.orderId, body.email, body.amount);
   }
 
   @Public()
-  @Post('webhook')
-  @ApiOperation({ summary: 'Stripe webhook endpoint' })
+  @Post('webhooks/paystack')
+  @ApiOperation({ summary: 'Paystack webhook endpoint' })
   async handleWebhook(
-    @Headers('stripe-signature') signature: string,
-    @Req() req: any, // In NestJS to get raw body for stripe you often need raw payload
+    @Headers('x-paystack-signature') signature: string,
+    @Req() req: any, // In NestJS you often need raw payload for webhooks
   ) {
-    // Note: To receive raw body, you might need to configure the body parser in main.ts
-    // For simplicity, assuming payload is available on req.rawBody or handled via middleware
-    return this.paymentsService.handleWebhook(signature, req.rawBody || req.body);
+    const rawBody = req.rawBody || (req as any).body;
+    return this.paymentsService.handlePaystackWebhook(signature, rawBody);
   }
 }

@@ -1,97 +1,110 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
-import Stripe from 'stripe';
+import axios from 'axios';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class PaymentsService {
-  private stripe: Stripe;
+  private readonly paystackSecretKey: string;
+  private readonly paystackBaseUrl = 'https://api.paystack.co';
 
   constructor(
     private configService: ConfigService,
     private prisma: PrismaService,
   ) {
-    const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
-    if (stripeSecretKey) {
-      this.stripe = new Stripe(stripeSecretKey,      {
-        apiVersion: '2026-06-24.dahlia' as any,
-      },);
-    }
+    this.paystackSecretKey = this.configService.get<string>('PAYSTACK_SECRET_KEY') || '';
   }
 
-  async createPaymentIntent(orderId: string, amount: number) {
-    if (!this.stripe) {
-      // Return a mock client secret for development if Stripe isn't configured
-      return { clientSecret: 'mock_client_secret_for_dev', orderId };
+  async initializePaystack(orderId: string, email: string, amount: number) {
+    if (!this.paystackSecretKey) {
+      // Mock for development
+      return { authorizationUrl: 'https://checkout.paystack.com/mock', reference: `mock_${orderId}` };
     }
 
     try {
-      const paymentIntent = await this.stripe.paymentIntents.create({
-        amount: Math.round(amount * 100), // Stripe expects amounts in cents
-        currency: 'usd',
-        metadata: { orderId },
-      });
+      const response = await axios.post(
+        `${this.paystackBaseUrl}/transaction/initialize`,
+        {
+          email,
+          amount: Math.round(amount * 100), // Convert to kobo
+          metadata: { orderId },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.paystackSecretKey}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
 
       return {
-        clientSecret: paymentIntent.client_secret,
-        orderId,
+        authorizationUrl: response.data.data.authorization_url,
+        reference: response.data.data.reference,
+        accessCode: response.data.data.access_code,
       };
     } catch (error: any) {
-      throw new BadRequestException(error.message);
+      const message = error.response?.data?.message || error.message;
+      throw new BadRequestException(`Paystack initialization failed: ${message}`);
     }
   }
 
-  async handleWebhook(signature: string, payload: Buffer) {
-    if (!this.stripe) return { received: true };
+  async handlePaystackWebhook(signature: string, payload: Buffer) {
+    if (!this.paystackSecretKey) return { received: true };
 
-    const webhookSecret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
-    let event: Stripe.Event;
+    const hash = crypto
+      .createHmac('sha512', this.paystackSecretKey)
+      .update(payload)
+      .digest('hex');
 
-    try {
-      event = this.stripe.webhooks.constructEvent(payload, signature, webhookSecret!);
-    } catch (err: any) {
-      throw new BadRequestException(`Webhook Error: ${err.message}`);
+    if (hash !== signature) {
+      throw new BadRequestException('Invalid webhook signature');
     }
 
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        await this.handlePaymentSuccess(paymentIntent);
-        break;
-      // Handle other event types
-      default:
-        console.log(`Unhandled event type ${event.type}`);
+    let event: any;
+    try {
+      event = JSON.parse(payload.toString());
+    } catch (err) {
+      throw new BadRequestException('Invalid JSON payload');
+    }
+
+    if (event.event === 'charge.success') {
+      const data = event.data;
+      const orderId = data.metadata?.orderId;
+      if (orderId) {
+        await this.handlePaymentSuccess(orderId, data.id.toString(), data.amount / 100, data.currency);
+      }
     }
 
     return { received: true };
   }
 
-  private async handlePaymentSuccess(paymentIntent: Stripe.PaymentIntent) {
-    const orderId = paymentIntent.metadata.orderId;
-    if (!orderId) return;
-
+  private async handlePaymentSuccess(orderId: string, transactionId: string, amount: number, currency: string) {
     await this.prisma.$transaction(async (tx) => {
+      // Create payment record
       await tx.payment.create({
         data: {
           orderId,
-          provider: 'stripe',
-          transactionId: paymentIntent.id,
-          amount: paymentIntent.amount / 100,
-          currency: paymentIntent.currency.toUpperCase(),
+          provider: 'paystack',
+          transactionId,
+          amount,
+          currency,
           status: 'succeeded',
         },
       });
 
+      // Update order status
       await tx.order.update({
         where: { id: orderId },
         data: { status: 'CONFIRMED' },
       });
 
+      // Record history
       await tx.orderStatusHistory.create({
         data: {
           orderId,
           status: 'CONFIRMED',
-          note: 'Payment received via Stripe',
+          note: 'Payment received via Paystack',
         },
       });
     });

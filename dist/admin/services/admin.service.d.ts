@@ -1,0 +1,234 @@
+import { PrismaService } from '../../prisma/prisma.service';
+export declare class AdminService {
+    private prisma;
+    constructor(prisma: PrismaService);
+    getAnalyticsOverview(): Promise<{
+        totalOrders: number;
+        totalRevenue: number;
+        activeCustomers: number;
+        topProducts: (import(".prisma/client").Prisma.PickEnumerable<import(".prisma/client").Prisma.OrderItemGroupByOutputType, "variantId"[]> & {
+            _sum: {
+                quantity: number | null;
+            };
+        })[];
+    }>;
+    createProduct(data: any): Promise<({
+        variants: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            productId: string;
+            sku: string;
+            barcode: string | null;
+            color: string;
+            colorHex: string | null;
+            size: string;
+            priceOffset: number;
+            inventory: number;
+            compareAtPrice: number | null;
+            isInventoryTracked: boolean;
+            lowStockThreshold: number;
+            weight: number | null;
+            dimensions: import("@prisma/client/runtime/library").JsonValue | null;
+            hsCode: string | null;
+            countryOfOrigin: string | null;
+        }[];
+        images: {
+            order: number;
+            id: string;
+            productId: string;
+            url: string;
+            alt: string | null;
+            isMain: boolean;
+        }[];
+    } & {
+        name: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: import(".prisma/client").$Enums.ProductStatus;
+        description: string;
+        slug: string;
+        fabricDetails: string | null;
+        careInstructions: string | null;
+        basePrice: number;
+        isFeatured: boolean;
+        categoryId: string;
+        collectionId: string | null;
+        seoTitle: string | null;
+        seoDescription: string | null;
+    }) | null>;
+    updateProduct(id: string, data: any): Promise<{
+        name: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: import(".prisma/client").$Enums.ProductStatus;
+        description: string;
+        slug: string;
+        fabricDetails: string | null;
+        careInstructions: string | null;
+        basePrice: number;
+        isFeatured: boolean;
+        categoryId: string;
+        collectionId: string | null;
+        seoTitle: string | null;
+        seoDescription: string | null;
+    }>;
+    getProducts(): Promise<({
+        category: {
+            name: string;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            slug: string;
+            image: string | null;
+            parentId: string | null;
+        };
+        variants: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            productId: string;
+            sku: string;
+            barcode: string | null;
+            color: string;
+            colorHex: string | null;
+            size: string;
+            priceOffset: number;
+            inventory: number;
+            compareAtPrice: number | null;
+            isInventoryTracked: boolean;
+            lowStockThreshold: number;
+            weight: number | null;
+            dimensions: import("@prisma/client/runtime/library").JsonValue | null;
+            hsCode: string | null;
+            countryOfOrigin: string | null;
+        }[];
+    } & {
+        name: string;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: import(".prisma/client").$Enums.ProductStatus;
+        description: string;
+        slug: string;
+        fabricDetails: string | null;
+        careInstructions: string | null;
+        basePrice: number;
+        isFeatured: boolean;
+        categoryId: string;
+        collectionId: string | null;
+        seoTitle: string | null;
+        seoDescription: string | null;
+    })[]>;
+    getLowStockInventory(): Promise<({
+        product: {
+            name: string;
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            status: import(".prisma/client").$Enums.ProductStatus;
+            description: string;
+            slug: string;
+            fabricDetails: string | null;
+            careInstructions: string | null;
+            basePrice: number;
+            isFeatured: boolean;
+            categoryId: string;
+            collectionId: string | null;
+            seoTitle: string | null;
+            seoDescription: string | null;
+        };
+    } & {
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        productId: string;
+        sku: string;
+        barcode: string | null;
+        color: string;
+        colorHex: string | null;
+        size: string;
+        priceOffset: number;
+        inventory: number;
+        compareAtPrice: number | null;
+        isInventoryTracked: boolean;
+        lowStockThreshold: number;
+        weight: number | null;
+        dimensions: import("@prisma/client/runtime/library").JsonValue | null;
+        hsCode: string | null;
+        countryOfOrigin: string | null;
+    })[]>;
+    updateInventory(variantId: string, inventory: number): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        productId: string;
+        sku: string;
+        barcode: string | null;
+        color: string;
+        colorHex: string | null;
+        size: string;
+        priceOffset: number;
+        inventory: number;
+        compareAtPrice: number | null;
+        isInventoryTracked: boolean;
+        lowStockThreshold: number;
+        weight: number | null;
+        dimensions: import("@prisma/client/runtime/library").JsonValue | null;
+        hsCode: string | null;
+        countryOfOrigin: string | null;
+    }>;
+    getOrders(): Promise<({
+        user: {
+            id: string;
+            email: string;
+            passwordHash: string;
+            firstName: string;
+            lastName: string;
+            role: import(".prisma/client").$Enums.Role;
+            isActive: boolean;
+            isEmailVerified: boolean;
+            avatar: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+    } & {
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
+        orderNumber: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        totalAmount: number;
+        subtotal: number;
+        taxAmount: number;
+        shippingCost: number;
+        currency: string;
+        paymentMethod: import(".prisma/client").$Enums.PaymentMethod | null;
+        discountAmount: number;
+        couponCode: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+        billingAddress: import("@prisma/client/runtime/library").JsonValue;
+    })[]>;
+    updateOrderStatus(orderId: string, status: any): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        userId: string;
+        orderNumber: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        totalAmount: number;
+        subtotal: number;
+        taxAmount: number;
+        shippingCost: number;
+        currency: string;
+        paymentMethod: import(".prisma/client").$Enums.PaymentMethod | null;
+        discountAmount: number;
+        couponCode: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+        billingAddress: import("@prisma/client/runtime/library").JsonValue;
+    }>;
+}
