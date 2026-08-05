@@ -12,12 +12,25 @@ export class AdminService {
       where: { status: { in: ['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED'] } },
     });
     
-    const topProducts = await this.prisma.orderItem.groupBy({
+    const topProductsGrouping = await this.prisma.orderItem.groupBy({
       by: ['variantId'],
       _sum: { quantity: true },
       orderBy: { _sum: { quantity: 'desc' } },
       take: 5,
     });
+
+    const topProducts = await Promise.all(
+      topProductsGrouping.map(async (group) => {
+        const variant = await this.prisma.productVariant.findUnique({
+          where: { id: group.variantId },
+          include: { product: true }
+        });
+        return {
+          variant,
+          totalQuantitySold: group._sum.quantity,
+        };
+      })
+    );
 
     const activeCustomers = await this.prisma.user.count({
       where: { role: 'USER' },
