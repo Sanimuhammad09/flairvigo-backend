@@ -66,6 +66,24 @@ export class UsersService {
     });
   }
 
+  async deleteUser(id: string): Promise<User> {
+    return this.prisma.user.delete({
+      where: { id },
+    });
+  }
+
+  async updateUserAsAdmin(id: string, data: any): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        isActive: data.isActive,
+      },
+    });
+  }
+
   async validatePassword(user: User, password: string): Promise<boolean> {
     return bcrypt.compare(password, user.passwordHash);
   }

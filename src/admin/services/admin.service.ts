@@ -75,6 +75,12 @@ export class AdminService {
     });
   }
 
+  async deleteProduct(id: string) {
+    return this.prisma.product.delete({
+      where: { id },
+    });
+  }
+
   async getProducts() {
     return this.prisma.product.findMany({
       include: { variants: true, category: true },

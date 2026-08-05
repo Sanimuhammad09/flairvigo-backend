@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { AdminService } from '../services/admin.service';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -29,5 +29,11 @@ export class AdminProductsController {
   @ApiOperation({ summary: 'Update an existing product' })
   async updateProduct(@Param('id') id: string, @Body() data: any) {
     return this.adminService.updateProduct(id, data);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete an existing product' })
+  async deleteProduct(@Param('id') id: string) {
+    return this.adminService.deleteProduct(id);
   }
 }

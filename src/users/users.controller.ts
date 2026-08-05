@@ -90,4 +90,29 @@ export class UsersController {
     const { passwordHash, ...safeUser } = updated;
     return safeUser;
   }
+
+  @Delete('admin/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a user (admin only)' })
+  async deleteUser(@Param('id') id: string) {
+    const deleted = await this.usersService.deleteUser(id);
+    const { passwordHash, ...safeUser } = deleted;
+    return safeUser;
+  }
+
+  @Put('admin/:id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update a user (admin only)' })
+  async updateUserAsAdmin(
+    @Param('id') id: string,
+    @Body() data: any,
+  ) {
+    const updated = await this.usersService.updateUserAsAdmin(id, data);
+    const { passwordHash, ...safeUser } = updated;
+    return safeUser;
+  }
 }
