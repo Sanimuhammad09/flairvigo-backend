@@ -14,7 +14,7 @@ async function bootstrap() {
     app.use(helmet());
     app.enableCors({
       origin: function (origin, callback) {
-        if (!origin || origin.includes('localhost') || origin.endsWith('vercel.app') || origin === process.env.FRONTEND_URL) {
+        if (!origin || origin.includes('localhost') || origin.endsWith('vercel.app') || origin.includes('flairvigo.com') || origin === process.env.FRONTEND_URL) {
           callback(null, true);
         } else {
           callback(new Error('Not allowed by CORS'));
