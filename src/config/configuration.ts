@@ -10,7 +10,7 @@ export default () => ({
   jwt: {
     secret: process.env.JWT_SECRET || 'super-secret-default-key',
     refreshSecret: process.env.JWT_REFRESH_SECRET || 'super-secret-refresh-key',
-    expiresIn: process.env.JWT_EXPIRATION || '15m',
+    expiresIn: process.env.JWT_EXPIRATION || '5d',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRATION || '7d',
   },
   stripe: {
