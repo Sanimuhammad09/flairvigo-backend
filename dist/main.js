@@ -15,12 +15,14 @@ async function bootstrap() {
         const app = await core_1.NestFactory.create(app_module_1.AppModule);
         app.use((0, helmet_1.default)());
         app.enableCors({
-            origin: [
-                process.env.FRONTEND_URL,
-                'http://localhost:3000',
-                'http://localhost:5173',
-                'https://flairvigo-frontend-two.vercel.app'
-            ].filter(Boolean),
+            origin: function (origin, callback) {
+                if (!origin || origin.includes('localhost') || origin.endsWith('vercel.app') || origin.includes('flairvigo.com') || origin === process.env.FRONTEND_URL) {
+                    callback(null, true);
+                }
+                else {
+                    callback(new Error('Not allowed by CORS'));
+                }
+            },
             credentials: true,
         });
         app.setGlobalPrefix('api');

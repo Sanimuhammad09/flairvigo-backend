@@ -13,7 +13,7 @@ async function bootstrap() {
     // Security
     app.use(helmet());
     app.enableCors({
-      origin: function (origin, callback) {
+      origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
         if (!origin || origin.includes('localhost') || origin.endsWith('vercel.app') || origin.includes('flairvigo.com') || origin === process.env.FRONTEND_URL) {
           callback(null, true);
         } else {
