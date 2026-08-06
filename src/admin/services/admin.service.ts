@@ -156,4 +156,60 @@ export class AdminService {
       return order;
     });
   }
+
+  async getCustomers() {
+    return this.prisma.user.findMany({
+      where: { role: 'USER' },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        _count: {
+          select: { orders: true }
+        }
+      }
+    });
+  }
+
+  async deleteCustomer(id: string) {
+    return this.prisma.user.delete({
+      where: { id }
+    });
+  }
+
+  async getCoupons() {
+    return this.prisma.coupon.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+  }
+
+  async createCoupon(data: any) {
+    return this.prisma.coupon.create({
+      data
+    });
+  }
+
+  async deleteCoupon(id: string) {
+    return this.prisma.coupon.delete({
+      where: { id }
+    });
+  }
+
+  async getSettings() {
+    let settings = await this.prisma.storeSettings.findUnique({
+      where: { id: 'global' }
+    });
+    if (!settings) {
+      settings = await this.prisma.storeSettings.create({
+        data: { id: 'global' }
+      });
+    }
+    return settings;
+  }
+
+  async updateSettings(data: any) {
+    return this.prisma.storeSettings.upsert({
+      where: { id: 'global' },
+      update: data,
+      create: { ...data, id: 'global' }
+    });
+  }
 }

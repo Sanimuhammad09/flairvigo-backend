@@ -12,70 +12,47 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminProductsController = void 0;
+exports.AdminCustomersController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const admin_service_1 = require("../services/admin.service");
 const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const client_1 = require("@prisma/client");
-let AdminProductsController = class AdminProductsController {
+let AdminCustomersController = class AdminCustomersController {
     adminService;
     constructor(adminService) {
         this.adminService = adminService;
     }
-    async getProducts() {
-        return this.adminService.getProducts();
+    async getCustomers() {
+        return this.adminService.getCustomers();
     }
-    async createProduct(data) {
-        return this.adminService.createProduct(data);
-    }
-    async updateProduct(id, data) {
-        return this.adminService.updateProduct(id, data);
-    }
-    async deleteProduct(id) {
-        return this.adminService.deleteProduct(id);
+    async deleteCustomer(id) {
+        return this.adminService.deleteCustomer(id);
     }
 };
-exports.AdminProductsController = AdminProductsController;
+exports.AdminCustomersController = AdminCustomersController;
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'List all products (including drafts)' }),
+    (0, swagger_1.ApiOperation)({ summary: 'List all customers' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "getProducts", null);
-__decorate([
-    (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Create a new product with variants and images atomically' }),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "createProduct", null);
-__decorate([
-    (0, common_1.Put)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Update an existing product' }),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "updateProduct", null);
+], AdminCustomersController.prototype, "getCustomers", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Delete an existing product' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a customer' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "deleteProduct", null);
-exports.AdminProductsController = AdminProductsController = __decorate([
-    (0, swagger_1.ApiTags)('admin-products'),
-    (0, common_1.Controller)('admin/products'),
+], AdminCustomersController.prototype, "deleteCustomer", null);
+exports.AdminCustomersController = AdminCustomersController = __decorate([
+    (0, swagger_1.ApiTags)('admin-customers'),
+    (0, common_1.Controller)('admin/customers'),
     (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(client_1.Role.ADMIN, client_1.Role.STAFF),
     (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [admin_service_1.AdminService])
-], AdminProductsController);
-//# sourceMappingURL=admin-products.controller.js.map
+], AdminCustomersController);
+//# sourceMappingURL=admin-customers.controller.js.map

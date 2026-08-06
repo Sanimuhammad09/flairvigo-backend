@@ -12,6 +12,9 @@ const admin_analytics_controller_1 = require("./controllers/admin-analytics.cont
 const admin_products_controller_1 = require("./controllers/admin-products.controller");
 const admin_inventory_controller_1 = require("./controllers/admin-inventory.controller");
 const admin_orders_controller_1 = require("./controllers/admin-orders.controller");
+const admin_customers_controller_1 = require("./controllers/admin-customers.controller");
+const admin_marketing_controller_1 = require("./controllers/admin-marketing.controller");
+const admin_settings_controller_1 = require("./controllers/admin-settings.controller");
 const admin_service_1 = require("./services/admin.service");
 let AdminModule = class AdminModule {
 };
@@ -23,6 +26,9 @@ exports.AdminModule = AdminModule = __decorate([
             admin_products_controller_1.AdminProductsController,
             admin_inventory_controller_1.AdminInventoryController,
             admin_orders_controller_1.AdminOrdersController,
+            admin_customers_controller_1.AdminCustomersController,
+            admin_marketing_controller_1.AdminMarketingController,
+            admin_settings_controller_1.AdminSettingsController,
         ],
         providers: [admin_service_1.AdminService],
     })

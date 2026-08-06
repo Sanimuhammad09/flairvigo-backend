@@ -12,70 +12,58 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminProductsController = void 0;
+exports.AdminMarketingController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const admin_service_1 = require("../services/admin.service");
 const roles_guard_1 = require("../../common/guards/roles.guard");
 const roles_decorator_1 = require("../../common/decorators/roles.decorator");
 const client_1 = require("@prisma/client");
-let AdminProductsController = class AdminProductsController {
+let AdminMarketingController = class AdminMarketingController {
     adminService;
     constructor(adminService) {
         this.adminService = adminService;
     }
-    async getProducts() {
-        return this.adminService.getProducts();
+    async getCoupons() {
+        return this.adminService.getCoupons();
     }
-    async createProduct(data) {
-        return this.adminService.createProduct(data);
+    async createCoupon(body) {
+        return this.adminService.createCoupon(body);
     }
-    async updateProduct(id, data) {
-        return this.adminService.updateProduct(id, data);
-    }
-    async deleteProduct(id) {
-        return this.adminService.deleteProduct(id);
+    async deleteCoupon(id) {
+        return this.adminService.deleteCoupon(id);
     }
 };
-exports.AdminProductsController = AdminProductsController;
+exports.AdminMarketingController = AdminMarketingController;
 __decorate([
-    (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'List all products (including drafts)' }),
+    (0, common_1.Get)('coupons'),
+    (0, swagger_1.ApiOperation)({ summary: 'List all coupons' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "getProducts", null);
+], AdminMarketingController.prototype, "getCoupons", null);
 __decorate([
-    (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Create a new product with variants and images atomically' }),
+    (0, common_1.Post)('coupons'),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a coupon' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "createProduct", null);
+], AdminMarketingController.prototype, "createCoupon", null);
 __decorate([
-    (0, common_1.Put)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Update an existing product' }),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "updateProduct", null);
-__decorate([
-    (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Delete an existing product' }),
+    (0, common_1.Delete)('coupons/:id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a coupon' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], AdminProductsController.prototype, "deleteProduct", null);
-exports.AdminProductsController = AdminProductsController = __decorate([
-    (0, swagger_1.ApiTags)('admin-products'),
-    (0, common_1.Controller)('admin/products'),
+], AdminMarketingController.prototype, "deleteCoupon", null);
+exports.AdminMarketingController = AdminMarketingController = __decorate([
+    (0, swagger_1.ApiTags)('admin-marketing'),
+    (0, common_1.Controller)('admin/marketing'),
     (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(client_1.Role.ADMIN, client_1.Role.STAFF),
     (0, swagger_1.ApiBearerAuth)(),
     __metadata("design:paramtypes", [admin_service_1.AdminService])
-], AdminProductsController);
-//# sourceMappingURL=admin-products.controller.js.map
+], AdminMarketingController);
+//# sourceMappingURL=admin-marketing.controller.js.map

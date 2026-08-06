@@ -75,6 +75,16 @@ let UsersController = class UsersController {
         const { passwordHash, ...safeUser } = updated;
         return safeUser;
     }
+    async deleteUser(id) {
+        const deleted = await this.usersService.deleteUser(id);
+        const { passwordHash, ...safeUser } = deleted;
+        return safeUser;
+    }
+    async updateUserAsAdmin(id, data) {
+        const updated = await this.usersService.updateUserAsAdmin(id, data);
+        const { passwordHash, ...safeUser } = updated;
+        return safeUser;
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -119,6 +129,29 @@ __decorate([
     __metadata("design:paramtypes", [String, Boolean]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "updateStatus", null);
+__decorate([
+    Delete('admin/:id'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a user (admin only)' }),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "deleteUser", null);
+__decorate([
+    (0, common_1.Put)('admin/:id'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a user (admin only)' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "updateUserAsAdmin", null);
 exports.UsersController = UsersController = __decorate([
     (0, swagger_1.ApiTags)('users'),
     (0, common_1.Controller)('users'),

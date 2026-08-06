@@ -23,12 +23,22 @@ let AdminService = class AdminService {
             _sum: { totalAmount: true },
             where: { status: { in: ['CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED'] } },
         });
-        const topProducts = await this.prisma.orderItem.groupBy({
+        const topProductsGrouping = await this.prisma.orderItem.groupBy({
             by: ['variantId'],
             _sum: { quantity: true },
             orderBy: { _sum: { quantity: 'desc' } },
             take: 5,
         });
+        const topProducts = await Promise.all(topProductsGrouping.map(async (group) => {
+            const variant = await this.prisma.productVariant.findUnique({
+                where: { id: group.variantId },
+                include: { product: true }
+            });
+            return {
+                variant,
+                totalQuantitySold: group._sum.quantity,
+            };
+        }));
         const activeCustomers = await this.prisma.user.count({
             where: { role: 'USER' },
         });
@@ -77,6 +87,11 @@ let AdminService = class AdminService {
             data,
         });
     }
+    async deleteProduct(id) {
+        return this.prisma.product.delete({
+            where: { id },
+        });
+    }
     async getProducts() {
         return this.prisma.product.findMany({
             include: { variants: true, category: true },
@@ -102,7 +117,18 @@ let AdminService = class AdminService {
     }
     async getOrders() {
         return this.prisma.order.findMany({
-            include: { user: true },
+            include: {
+                user: true,
+                items: {
+                    include: {
+                        variant: {
+                            include: {
+                                product: true
+                            }
+                        }
+                    }
+                }
+            },
             orderBy: { createdAt: 'desc' },
         });
     }
@@ -120,6 +146,55 @@ let AdminService = class AdminService {
                 },
             });
             return order;
+        });
+    }
+    async getCustomers() {
+        return this.prisma.user.findMany({
+            where: { role: 'USER' },
+            orderBy: { createdAt: 'desc' },
+            include: {
+                _count: {
+                    select: { orders: true }
+                }
+            }
+        });
+    }
+    async deleteCustomer(id) {
+        return this.prisma.user.delete({
+            where: { id }
+        });
+    }
+    async getCoupons() {
+        return this.prisma.coupon.findMany({
+            orderBy: { createdAt: 'desc' }
+        });
+    }
+    async createCoupon(data) {
+        return this.prisma.coupon.create({
+            data
+        });
+    }
+    async deleteCoupon(id) {
+        return this.prisma.coupon.delete({
+            where: { id }
+        });
+    }
+    async getSettings() {
+        let settings = await this.prisma.storeSettings.findUnique({
+            where: { id: 'global' }
+        });
+        if (!settings) {
+            settings = await this.prisma.storeSettings.create({
+                data: { id: 'global' }
+            });
+        }
+        return settings;
+    }
+    async updateSettings(data) {
+        return this.prisma.storeSettings.upsert({
+            where: { id: 'global' },
+            update: data,
+            create: { ...data, id: 'global' }
         });
     }
 };

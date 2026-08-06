@@ -65,5 +65,29 @@ export declare class UsersController {
         createdAt: Date;
         updatedAt: Date;
     }>;
+    deleteUser(id: string): Promise<{
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        role: import(".prisma/client").$Enums.Role;
+        isActive: boolean;
+        isEmailVerified: boolean;
+        avatar: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    updateUserAsAdmin(id: string, data: any): Promise<{
+        id: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        role: import(".prisma/client").$Enums.Role;
+        isActive: boolean;
+        isEmailVerified: boolean;
+        avatar: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
 }
 export {};

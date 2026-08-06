@@ -15,6 +15,8 @@ export declare class UsersService {
     update(id: string, data: Prisma.UserUpdateInput): Promise<User>;
     updatePassword(id: string, newPassword: string): Promise<User>;
     updateStatus(id: string, isActive: boolean): Promise<User>;
+    deleteUser(id: string): Promise<User>;
+    updateUserAsAdmin(id: string, data: any): Promise<User>;
     validatePassword(user: User, password: string): Promise<boolean>;
     findAll(params: {
         page?: number;
