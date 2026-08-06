@@ -13,12 +13,13 @@ async function bootstrap() {
     // Security
     app.use(helmet());
     app.enableCors({
-      origin: [
-        process.env.FRONTEND_URL, 
-        'http://localhost:3000', 
-        'http://localhost:5173',
-        'https://flairvigo-frontend-two.vercel.app'
-      ].filter(Boolean) as string[],
+      origin: function (origin, callback) {
+        if (!origin || origin.includes('localhost') || origin.endsWith('vercel.app') || origin === process.env.FRONTEND_URL) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       credentials: true,
     });
 
