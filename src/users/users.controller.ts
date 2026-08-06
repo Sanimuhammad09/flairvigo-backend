@@ -6,6 +6,7 @@ import {
   UseGuards,
   Query,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UsersService } from './users.service';

@@ -30,6 +30,9 @@ let AdminCustomersController = class AdminCustomersController {
     async deleteCustomer(id) {
         return this.adminService.deleteCustomer(id);
     }
+    async updateCustomer(id, body) {
+        return this.adminService.updateCustomer(id, body);
+    }
 };
 exports.AdminCustomersController = AdminCustomersController;
 __decorate([
@@ -47,6 +50,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AdminCustomersController.prototype, "deleteCustomer", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a customer' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], AdminCustomersController.prototype, "updateCustomer", null);
 exports.AdminCustomersController = AdminCustomersController = __decorate([
     (0, swagger_1.ApiTags)('admin-customers'),
     (0, common_1.Controller)('admin/customers'),

@@ -175,6 +175,13 @@ export class AdminService {
     });
   }
 
+  async updateCustomer(id: string, data: any) {
+    return this.prisma.user.update({
+      where: { id },
+      data
+    });
+  }
+
   async getCoupons() {
     return this.prisma.coupon.findMany({
       orderBy: { createdAt: 'desc' }

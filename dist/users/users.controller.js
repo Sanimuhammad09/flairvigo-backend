@@ -130,7 +130,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "updateStatus", null);
 __decorate([
-    Delete('admin/:id'),
+    (0, common_1.Delete)('admin/:id'),
     (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
     (0, swagger_1.ApiBearerAuth)(),

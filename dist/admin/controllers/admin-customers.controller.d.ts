@@ -7,29 +7,42 @@ export declare class AdminCustomersController {
             orders: number;
         };
     } & {
-        role: import(".prisma/client").$Enums.Role;
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
         passwordHash: string;
         firstName: string;
         lastName: string;
+        role: import(".prisma/client").$Enums.Role;
         isActive: boolean;
         isEmailVerified: boolean;
         avatar: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     })[]>;
     deleteCustomer(id: string): Promise<{
-        role: import(".prisma/client").$Enums.Role;
         id: string;
-        createdAt: Date;
-        updatedAt: Date;
         email: string;
         passwordHash: string;
         firstName: string;
         lastName: string;
+        role: import(".prisma/client").$Enums.Role;
         isActive: boolean;
         isEmailVerified: boolean;
         avatar: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    updateCustomer(id: string, body: any): Promise<{
+        id: string;
+        email: string;
+        passwordHash: string;
+        firstName: string;
+        lastName: string;
+        role: import(".prisma/client").$Enums.Role;
+        isActive: boolean;
+        isEmailVerified: boolean;
+        avatar: string | null;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
 }

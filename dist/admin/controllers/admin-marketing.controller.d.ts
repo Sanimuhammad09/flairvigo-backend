@@ -4,11 +4,11 @@ export declare class AdminMarketingController {
     constructor(adminService: AdminService);
     getCoupons(): Promise<{
         id: string;
+        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        isActive: boolean;
-        code: string;
         type: string;
+        code: string;
         value: number;
         minOrderValue: number | null;
         maxDiscount: number | null;
@@ -19,11 +19,11 @@ export declare class AdminMarketingController {
     }[]>;
     createCoupon(body: any): Promise<{
         id: string;
+        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        isActive: boolean;
-        code: string;
         type: string;
+        code: string;
         value: number;
         minOrderValue: number | null;
         maxDiscount: number | null;
@@ -34,11 +34,11 @@ export declare class AdminMarketingController {
     }>;
     deleteCoupon(id: string): Promise<{
         id: string;
+        isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
-        isActive: boolean;
-        code: string;
         type: string;
+        code: string;
         value: number;
         minOrderValue: number | null;
         maxDiscount: number | null;

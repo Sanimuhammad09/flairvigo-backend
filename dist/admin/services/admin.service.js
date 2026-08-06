@@ -164,6 +164,12 @@ let AdminService = class AdminService {
             where: { id }
         });
     }
+    async updateCustomer(id, data) {
+        return this.prisma.user.update({
+            where: { id },
+            data
+        });
+    }
     async getCoupons() {
         return this.prisma.coupon.findMany({
             orderBy: { createdAt: 'desc' }
