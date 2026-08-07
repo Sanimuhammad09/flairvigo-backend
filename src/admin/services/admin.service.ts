@@ -46,12 +46,23 @@ export class AdminService {
 
   async createProduct(data: any) {
     return this.prisma.$transaction(async (tx) => {
-      const { variants, images, categoryId, collectionId, ...productData } = data;
+      const { variants, images, categoryId, collectionId, seoKeywords, isDraft, ...productData } = data;
       
+      const slug = data.slug || productData.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') || `product-${Date.now()}`;
+      const status = isDraft ? 'DRAFT' : 'ACTIVE';
+      
+      let actualCategoryId = categoryId;
+      if (actualCategoryId && actualCategoryId.length < 30) {
+        const cat = await tx.category.findFirst();
+        actualCategoryId = cat?.id;
+      }
+
       const product = await tx.product.create({
         data: {
           ...productData,
-          categoryId,
+          slug,
+          status,
+          categoryId: actualCategoryId,
           collectionId,
         },
       });
@@ -83,11 +94,24 @@ export class AdminService {
 
   async updateProduct(id: string, data: any) {
     return this.prisma.$transaction(async (tx) => {
-      const { variants, images, ...productData } = data;
+      const { variants, images, seoKeywords, isDraft, categoryId, ...productData } = data;
       
+      if (isDraft !== undefined) {
+        productData.status = isDraft ? 'DRAFT' : 'ACTIVE';
+      }
+
+      let actualCategoryId = categoryId;
+      if (actualCategoryId && actualCategoryId.length < 30) {
+        const cat = await tx.category.findFirst();
+        actualCategoryId = cat?.id;
+      }
+
       const product = await tx.product.update({
         where: { id },
-        data: productData,
+        data: {
+          ...productData,
+          ...(actualCategoryId && { categoryId: actualCategoryId })
+        },
       });
 
       if (variants !== undefined) {
