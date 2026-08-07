@@ -50,6 +50,15 @@ export class ProductsController {
     return this.productsService.findBySlug(slug);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  @Get('admin/:id')
+  @ApiOperation({ summary: 'Get product by ID (admin only)' })
+  async findById(@Param('id') id: string) {
+    return this.productsService.findById(id);
+  }
+
   @Public()
   @Get(':id/related')
   @ApiOperation({ summary: 'Get related products' })
