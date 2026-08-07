@@ -37,10 +37,40 @@ async function main() {
   });
 
   // --- Categories ---
-  const scrubsCategory = await prisma.category.upsert({
-    where: { slug: 'scrubs' },
+  const scrubTopsCat = await prisma.category.upsert({
+    where: { slug: 'scrub-tops' },
     update: {},
-    create: { name: 'Scrubs', slug: 'scrubs', description: 'Premium medical scrubs' },
+    create: { name: 'Scrub Tops', slug: 'scrub-tops', description: 'Premium scrub tops' },
+  });
+
+  const scrubDressesCat = await prisma.category.upsert({
+    where: { slug: 'scrub-dresses' },
+    update: {},
+    create: { name: 'Scrub Dresses', slug: 'scrub-dresses', description: 'Premium scrub dresses' },
+  });
+
+  const pantsCat = await prisma.category.upsert({
+    where: { slug: 'pants' },
+    update: {},
+    create: { name: 'Pants', slug: 'pants', description: 'Premium scrub pants' },
+  });
+
+  const accessoriesCat = await prisma.category.upsert({
+    where: { slug: 'accessories' },
+    update: {},
+    create: { name: 'Accessories', slug: 'accessories', description: 'Accessories for future use' },
+  });
+
+  const womensApparelCat = await prisma.category.upsert({
+    where: { slug: 'womens-apparel' },
+    update: {},
+    create: { name: "Women's Apparel", slug: 'womens-apparel', description: 'Women\'s apparel for future expansion' },
+  });
+
+  const giftSetsCat = await prisma.category.upsert({
+    where: { slug: 'gift-sets' },
+    update: {},
+    create: { name: 'Gift Sets', slug: 'gift-sets', description: 'Gift sets for future expansion' },
   });
 
   // --- Collections ---
@@ -70,7 +100,7 @@ async function main() {
       slug: 'sidrah-scrub-top',
       description: 'Elegant scrub top with tailored fit.',
       basePrice: 45000,
-      categoryId: scrubsCategory.id,
+      categoryId: scrubTopsCat.id,
       collectionId: sidrahCollection.id,
       images: {
         create: [
@@ -97,7 +127,7 @@ async function main() {
       slug: 'sidrah-wide-leg-pants',
       description: 'Comfortable wide leg scrub pants.',
       basePrice: 55000,
-      categoryId: scrubsCategory.id,
+      categoryId: pantsCat.id,
       collectionId: sidrahCollection.id,
       images: {
         create: [
@@ -124,7 +154,7 @@ async function main() {
       slug: 'layna-scrub-dress',
       description: 'Professional and stylish scrub dress.',
       basePrice: 65000,
-      categoryId: scrubsCategory.id,
+      categoryId: scrubDressesCat.id,
       collectionId: laynaCollection.id,
       images: {
         create: [
@@ -151,7 +181,7 @@ async function main() {
       slug: 'layna-pants',
       description: 'Classic scrub pants for everyday wear.',
       basePrice: 55000,
-      categoryId: scrubsCategory.id,
+      categoryId: pantsCat.id,
       collectionId: laynaCollection.id,
       images: {
         create: [

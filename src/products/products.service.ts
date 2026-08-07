@@ -207,6 +207,14 @@ export class ProductsService {
     });
   }
 
+  async markSoldOut(productId: string) {
+    await this.findById(productId);
+    return this.prisma.productVariant.updateMany({
+      where: { productId },
+      data: { inventory: 0 },
+    });
+  }
+
   async remove(id: string) {
     await this.findById(id);
     return this.prisma.product.delete({ where: { id } });
@@ -236,6 +244,21 @@ export class ProductsService {
         status: 'ACTIVE',
         categoryId: product.categoryId,
       },
+      take: limit,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        images: { orderBy: { order: 'asc' }, take: 2 },
+        variants: {
+          select: { color: true, colorHex: true },
+          distinct: ['color'],
+        },
+      },
+    });
+  }
+
+  async getBestSellers(limit: number = 8) {
+    return this.prisma.product.findMany({
+      where: { isBestSeller: true, status: 'ACTIVE' },
       take: limit,
       orderBy: { createdAt: 'desc' },
       include: {

@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { MailModule } from './mail/mail.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CollectionsModule } from './collections/collections.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
@@ -32,6 +33,7 @@ import { CheckoutModule } from './checkout/checkout.module';
     MailModule,
     ProductsModule,
     CategoriesModule,
+    CollectionsModule,
     OrdersModule,
     PaymentsModule,
     WishlistModule,

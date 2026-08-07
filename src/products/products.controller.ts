@@ -37,6 +37,13 @@ export class ProductsController {
   }
 
   @Public()
+  @Get('bestsellers')
+  @ApiOperation({ summary: 'Get best selling products' })
+  async getBestSellers(@Query('limit') limit?: number) {
+    return this.productsService.getBestSellers(limit);
+  }
+
+  @Public()
   @Get(':slug')
   @ApiOperation({ summary: 'Get product by slug' })
   async findBySlug(@Param('slug') slug: string) {
@@ -78,6 +85,15 @@ export class ProductsController {
   @ApiOperation({ summary: 'Update product variant (admin only)' })
   async updateVariant(@Param('id') id: string, @Body() dto: { inventory: number }) {
     return this.productsService.updateVariant(id, dto);
+  }
+
+  @Put(':id/sold-out')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Mark product as sold out (admin only)' })
+  async markSoldOut(@Param('id') id: string) {
+    return this.productsService.markSoldOut(id);
   }
 
   @Delete(':id')

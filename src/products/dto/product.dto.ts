@@ -101,6 +101,11 @@ export class CreateProductDto {
   @IsBoolean()
   isFeatured?: boolean;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  isBestSeller?: boolean;
+
   @ApiProperty()
   @IsString()
   categoryId: string;
@@ -161,6 +166,11 @@ export class UpdateProductDto {
   @IsOptional()
   @IsBoolean()
   isFeatured?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  isBestSeller?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -226,6 +236,12 @@ export class ProductFilterDto {
   @IsBoolean()
   @Type(() => Boolean)
   isFeatured?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  @Type(() => Boolean)
+  isBestSeller?: boolean;
 
   @ApiPropertyOptional({ default: 1 })
   @IsOptional()
