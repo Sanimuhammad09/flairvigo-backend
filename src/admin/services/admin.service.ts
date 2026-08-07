@@ -82,9 +82,44 @@ export class AdminService {
   }
 
   async updateProduct(id: string, data: any) {
-    return this.prisma.product.update({
-      where: { id },
-      data,
+    return this.prisma.$transaction(async (tx) => {
+      const { variants, images, ...productData } = data;
+      
+      const product = await tx.product.update({
+        where: { id },
+        data: productData,
+      });
+
+      if (variants !== undefined) {
+        // Delete existing variants and recreate
+        await tx.productVariant.deleteMany({ where: { productId: id } });
+        if (variants.length > 0) {
+          await tx.productVariant.createMany({
+            data: variants.map((v: any) => {
+              const { id: _, productId: __, ...vData } = v; // Remove existing id to let DB auto-generate
+              return { ...vData, productId: id };
+            }),
+          });
+        }
+      }
+
+      if (images !== undefined) {
+        // Delete existing images and recreate
+        await tx.productImage.deleteMany({ where: { productId: id } });
+        if (images.length > 0) {
+          await tx.productImage.createMany({
+            data: images.map((img: any) => {
+              const { id: _, productId: __, ...imgData } = img;
+              return { ...imgData, productId: id };
+            }),
+          });
+        }
+      }
+
+      return tx.product.findUnique({
+        where: { id },
+        include: { variants: true, images: true },
+      });
     });
   }
 
